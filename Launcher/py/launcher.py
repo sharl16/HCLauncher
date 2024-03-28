@@ -5,11 +5,8 @@ import psutil
 import time
 import win32gui
 import win32con
-import upgrader
 import mcinstall
 import pyautogui
-
-upgrader.check_for_upgrades()
 
 version = "ForgeOptiFine 1.20.1"
 mcinstall.verifyMCVersion(version)
@@ -146,6 +143,3 @@ for modpack_url in modpack_urls:
             print("File downloaded to:", downloaded_file_path)
     else:
         print(f"File {filename} is already installed.")
-
-# Open Minecraft
-open_game()

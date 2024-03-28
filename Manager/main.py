@@ -10,15 +10,13 @@ sys.path.append('Launcher/py')
 import upgrader
 import launcher
 
-async def check_for_updates():
-    print("Checking for updates..")
-    repo_url = "https://github.com/sharl16/HCLauncher"
-    await upgrader.update_launcher(repo_url)
+update_semaphore = asyncio.Semaphore(1)
 
 async def main():
-    await check_for_updates()  # Wait for check_for_updates coroutine to finish
-    print("Launching..")
-    time.sleep(5)
-    launcher.open_game()
+    print("Checking for updates..")
+    repo_url = "https://github.com/sharl16/HCLauncher"   
+    # Acquire the semaphore to ensure exclusive access
+    async with update_semaphore:
+        await upgrader.update_launcher(repo_url)
 
-asyncio.run(main())
+#asyncio.run(main())
