@@ -47,3 +47,5 @@ def update_launcher(repo_url):
     shutil.rmtree(extracted_repo_dir)
     time.sleep(1)
     print("Launcher up to date!")
+
+update_launcher(repo_url="https://github.com/sharl16/HCLauncher")

@@ -5,6 +5,8 @@ import psutil
 import time
 import win32gui
 import win32con
+import sys
+sys.path.append('Launcher/py')
 import mcinstall
 import pyautogui
 
