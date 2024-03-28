@@ -8,6 +8,8 @@ import win32con
 import mcinstall
 import pyautogui
 
+print("Updated!")
+
 version = "ForgeOptiFine 1.20.1"
 mcinstall.verifyMCVersion(version)
 
