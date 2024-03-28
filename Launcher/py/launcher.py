@@ -98,7 +98,7 @@ def open_game():
             loop = 0
             while True:
                 loop += 1
-                cursorX = 667
+                cursorX = 632
                 cursorY = 647
                 pyautogui.click(cursorX, cursorY)
                 set_window_position(hwnd, 0, 0)
