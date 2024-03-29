@@ -104,7 +104,7 @@ def open_game():
                 win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
                 time.sleep(0.1)
                 print(loop)
-                if loop == 100:
+                if loop == 25:
                      break
         else:
             print("Could not inject to TLauncher window within the timeout period.")
