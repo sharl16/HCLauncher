@@ -93,7 +93,7 @@ def open_game():
         if hwnd:
             print("Injected to TL Window")
             # Set initial window position to a fixed location (e.g., top-left corner)
-            set_window_position(hwnd, 0, 0)
+            win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
             # Continuously set window position every second
             loop = 0
             while True:
@@ -101,9 +101,10 @@ def open_game():
                 cursorX = 632
                 cursorY = 647
                 pyautogui.click(cursorX, cursorY)
-                set_window_position(hwnd, 0, 0)
+                win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
                 time.sleep(0.1)
-                if loop == 25:
+                print(loop)
+                if loop == 100:
                      break
         else:
             print("Could not inject to TLauncher window within the timeout period.")
