@@ -130,12 +130,16 @@ modpack_urls = [
 # Specify the relative path to the Minecraft mods directory
 relative_output_directory = ".minecraft\\mods"
 
-# Get the user's AppData directory and create the full output directory path
+# Get the user's AppData directory
+appdata_directory = os.getenv('APPDATA')
+
+# Create the full output directory path
 output_directory = os.path.join(appdata_directory, relative_output_directory)
 
 # Ensure the output directory exists, create if it doesn't
 if not os.path.exists(output_directory):
-    print(".minecraft or .minecraft/mods does not exist")
+    os.makedirs(output_directory)
+    print("Created directory:", output_directory)
 
 # Download or check each modpack in the list
 for modpack_url in modpack_urls:
