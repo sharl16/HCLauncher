@@ -123,7 +123,8 @@ modpack_urls = [
     "https://mediafilez.forgecdn.net/files/4962/610/waystones-forge-1.20-14.1.3.jar",
     "https://mediafilez.forgecdn.net/files/4764/804/BiomesOPlenty-1.20.1-18.0.0.598.jar",
     "https://mediafilez.forgecdn.net/files/5140/912/balm-forge-1.20.1-7.2.2.jar",
-    "https://mediafilez.forgecdn.net/files/4590/487/TerraBlender-forge-1.20.1-3.0.0.164.jar"
+    "https://mediafilez.forgecdn.net/files/4590/487/TerraBlender-forge-1.20.1-3.0.0.164.jar",
+    "https://mediafilez.forgecdn.net/files/5207/967/voicechat-forge-1.20.1-2.5.10.jar"
     # Add more URLs here if needed
 ]
 
