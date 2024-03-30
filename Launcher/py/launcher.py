@@ -90,24 +90,7 @@ def open_game():
         process = subprocess.Popen([game_path])
         # Wait for the window to appear
         hwnd = wait_for_tlauncher("TLauncher 2.899", timeout=30)
-        if hwnd:
-            print("Injected to TL Window")
-            # Set initial window position to a fixed location (e.g., top-left corner)
-            win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
-            # Continuously set window position every second
-            loop = 0
-            while True:
-                loop += 1
-                cursorX = 632
-                cursorY = 647
-                pyautogui.click(cursorX, cursorY)
-                win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
-                time.sleep(0.1)
-                print(loop)
-                if loop == 25:
-                     break
-        else:
-            print("Could not inject to TLauncher window within the timeout period.")
+        print("Finished.")
    
 
 
@@ -151,3 +134,5 @@ for modpack_url in modpack_urls:
             print("File downloaded to:", downloaded_file_path)
     else:
         print(f"File {filename} is already installed.")
+
+open_game()
