@@ -29,7 +29,7 @@ def verify_exe(pkgname):
         time.sleep(120)
         raise SystemExit(f"Halting code execution..")
 
-discordmdl = verify_exe("matlolib")
+discordmdl = verify_exe("discord")
 import rpc
 
 version = "ForgeOptiFine 1.20.1" # can be updated and changed
