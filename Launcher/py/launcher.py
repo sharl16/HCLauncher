@@ -11,21 +11,32 @@ import mcinstall
 import pyautogui
 import importlib
 
+class Colors:
+    RESET = '\033[0m'
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    WHITE = '\033[97m'
+
+
 def verify_exe(pkgname):
     try:
         pkgmodule = importlib.import_module(pkgname)
         print("Executable up to date!")
         return pkgmodule
     except ImportError:
-        print("Outdated exe! Download launcher from Discord (<2.3). {pkgname} was not found.")
+        print(f"{Colors.RED}Outdated exe! Download launcher from Discord (<2.3). {pkgname} was not found.{Colors.RESET}")
         time.sleep(1)
-        print("Gathering launcher information:")
+        print(f"{Colors.YELLOW}Gathering launcher information:{Colors.RESET}")
         time.sleep(2)
         print("Version: 2.2")
         print("Last updated: 31/3/2024")
         print("Vendor CPU: AuthenticAMD")
         print("Driver version: 24.3.1")
-        print("Closing in 120s..")
+        print(f"{Colors.BLUE}Closing in 120s..{Colors.RESET}")
         time.sleep(120)
         raise SystemExit(f"Halting code execution..")
 
