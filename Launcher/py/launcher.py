@@ -100,7 +100,7 @@ def open_game():
                 loop += 1
                 cursorX = 632
                 cursorY = 647
-                pyautogui.click(cursorX, cursorY)
+                #pyautogui.click(cursorX, cursorY)
                 win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
                 time.sleep(0.1)
                 print(loop)
