@@ -1,3 +1,4 @@
+# for verifying if the correct MC version is installed/selected
 import os
 
 appdata_directory = os.getenv('APPDATA')
@@ -6,7 +7,7 @@ tlconfig = os.path.join(appdata_directory, tlproperties)
 
 def verifyMCVersion(version):
     found_key = False
-    with open(tlconfig, "r") as file:
+    with open(tlconfig, "r") as file: # to read tlconfig
         lines = file.readlines()
 
     with open(tlconfig, "w") as file:
@@ -16,7 +17,7 @@ def verifyMCVersion(version):
                 file.write(line)
                 continue
 
-            key, value = line.strip().split("=")
+            key, value = line.strip().split("=") # to find the value of the key
             key = key.strip()
 
             if key == "login.version.game":
