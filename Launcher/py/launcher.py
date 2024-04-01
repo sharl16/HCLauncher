@@ -21,6 +21,8 @@ class Colors:
     CYAN = '\033[96m'
     WHITE = '\033[97m'
 
+import rpc
+
 
 def verify_exe(pkgname):
     try:
