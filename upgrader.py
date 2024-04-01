@@ -3,6 +3,7 @@ import requests
 import shutil
 import zipfile
 import time
+import configparser
 
 class Colors:
     RESET = '\033[0m'
@@ -13,6 +14,9 @@ class Colors:
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
     WHITE = '\033[97m'
+
+config = configparser.ConfigParser()
+config.read('HCLaunch.ini')
 
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
