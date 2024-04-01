@@ -1,4 +1,5 @@
 import os
+import sys
 import requests
 import shutil
 import zipfile
@@ -15,8 +16,40 @@ class Colors:
     CYAN = '\033[96m'
     WHITE = '\033[97m'
 
-config = configparser.ConfigParser()
-config.read('HCLaunch.ini')
+def check_for_updates():
+    # Fetch the INI file from GitHub
+    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/HCLaunch.ini"
+    response = requests.get(repo)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the local INI file
+        config = configparser.ConfigParser()
+        config.read('HCLaunch.ini')
+        appversion = config.get('APPVersion', 'version')
+        
+        # Parse the remote INI file
+        remote_config = configparser.ConfigParser()
+        remote_config.read_string(response.text)
+        
+        # Get the version from both INI files
+        local_ver = config['APPVersion']['version']
+        remote_ver = remote_config['APPVersion']['version']
+        
+        # Compare versions
+        if appversion == remote_ver:
+            print("Application up to date!")
+            launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher", "py"))
+            sys.path.append(launcher_path)
+            import launcher
+            launcher.open_game()
+        else:
+            print("Application out of date! Updating!")
+            time.sleep(5)
+    else:
+        print("Failed to fetch remote INI file")
+
+check_for_updates()
 
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
