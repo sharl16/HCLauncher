@@ -104,7 +104,7 @@ def open_game():
         print("Incorrect TLauncher version or TL is not installed (404). Download TLauncher 2.899")
         return
 
-    process_name = "javaw.exe"
+    process_name = "java.exe"
     if process_status(process_name):
         print(f"{process_name} is already running. Terminating the process.")
         for proc in psutil.process_iter():
