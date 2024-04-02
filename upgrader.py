@@ -19,6 +19,7 @@ class Colors:
     WHITE = '\033[97m'
 
 def check_for_updates():
+    print("Version 1.1")
     # Fetch the INI file from GitHub
     repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/HCLaunch.ini"
     response = requests.get(repo)
@@ -43,6 +44,8 @@ def check_for_updates():
         
         # Compare versions
         if appversion == remote_ver:
+            print(appversion)
+            print(remote_ver)
             print("Application up to date!")
             time.sleep(1)
             launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher", "py"))
