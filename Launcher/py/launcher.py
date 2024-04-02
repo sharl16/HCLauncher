@@ -10,6 +10,8 @@ sys.path.append('Launcher/py')
 import mcinstall
 import pyautogui
 import importlib
+import platform
+import getpass
 
 class Colors:
     RESET = '\033[0m'
@@ -21,23 +23,44 @@ class Colors:
     CYAN = '\033[96m'
     WHITE = '\033[97m'
 
+def get_hw_info():
+    processor = platform.processor()
+    architecture = platform.architecture()[0]
+    machine = platform.machine()
+    system_platform = platform.platform()
+    pyver = platform.python_version()
+    user = getpass.getuser()
+    return processor, architecture, machine, system_platform, pyver, user
+
+def get_os_info():
+    os_name = platform.system()
+    os_release = platform.release()
+    os_version = platform.version()
+    return os_name, os_release, os_version
+
 def verify_exe(pkgname):
     try:
         pkgmodule = importlib.import_module(pkgname)
         print("Executable up to date!")
         return pkgmodule
     except ImportError:
-        print(f"{Colors.RED}Outdated exe! Download launcher from Discord (<2.3). {pkgname} was not found.{Colors.RESET}")
-        time.sleep(1)
-        print(f"{Colors.YELLOW}Gathering launcher information:{Colors.RESET}")
+        print(f"{Colors.RED}Ξεπερασμένο .exe! Κατέβασε την τελευταία εκδόση απο το Discord. {pkgname} was not found.{Colors.RESET}")
+        time.sleep(1)     
+        print("\n--- System Information ---")
+        processor, architecture, machine, system_platform, pyver, user = get_hw_info()
+        print("Python:", pyver)
+        print("CPU:", processor)
+        print("Architecture:", architecture)
+        print("=======================")
+        print("User:", user)
+        print("Vendor:", machine)
+        print("OS:", system_platform)
         time.sleep(2)
-        print("Version: 2.2")
-        print("Last updated: 31/3/2024")
-        print("Vendor CPU: AuthenticAMD")
-        print("Driver version: 24.3.1")
         print(f"{Colors.BLUE}Closing in 120s..{Colors.RESET}")
         time.sleep(120)
         raise SystemExit(f"Halting code execution..")
+    
+verify_exe("requests")
 
 version = "ForgeOptiFine 1.20.1" # can be updated and changed
 mcinstall.verifyMCVersion(version)
