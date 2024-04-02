@@ -20,7 +20,7 @@ class Colors:
 
 def check_for_updates():
     # Fetch the INI file from GitHub
-    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/HCLaunch.ini"
+    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/HCLaunch.ini"
     response = requests.get(repo)
     
     # Check if the request was successful
