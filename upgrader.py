@@ -18,49 +18,6 @@ class Colors:
     CYAN = '\033[96m'
     WHITE = '\033[97m'
 
-def check_for_updates():
-    print("Version 1.1")
-    # Fetch the INI file from GitHub
-    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/HCLaunch.ini"
-    response = requests.get(repo)
-    
-    # Check if the request was successful
-    if response.status_code == 200:
-        launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher"))
-        sys.path.append(launcher_path)
-        # Parse the local INI file
-        config = configparser.ConfigParser()
-        ini_file_path = os.path.join(launcher_path, 'HCLaunch.ini')
-        config.read(ini_file_path)
-        appversion = config.get('APPVersion', 'version')
-        
-        # Parse the remote INI file
-        remote_config = configparser.ConfigParser()
-        remote_config.read_string(response.text)
-        
-        # Get the version from both INI files
-        local_ver = config['APPVersion']['version']
-        remote_ver = remote_config['APPVersion']['version']
-        
-        # Compare versions
-        if appversion == remote_ver:
-            print(appversion)
-            print(remote_ver)
-            print("Application up to date!")
-            time.sleep(1)
-            launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher", "py"))
-            sys.path.append(launcher_path)
-            import launcher
-            launcher.open_game()
-        else:
-            print("Application out of date! Updating!")
-            time.sleep(5)
-            update_launcher(repo_url="https://github.com/sharl16/HCLauncher")
-    else:
-        print("Failed to fetch remote INI file")
-
-check_for_updates()
-
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
     print("Downloading updates..")
@@ -122,3 +79,44 @@ def update_launcher(repo_url):
         print(f"{Colors.RED}Upgrader could not finish updating successfully. Download launcher again from Discord. {Colors.RESET}")
         print("Terminal exiting in (120)s.")
         time.sleep(120)
+
+def check_for_updates():
+    # Fetch the INI file from GitHub
+    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/HCLaunch.ini"
+    response = requests.get(repo)
+    # Check if the request was successful
+    if response.status_code == 200:
+        launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher"))
+        sys.path.append(launcher_path)
+        # Parse the local INI file
+        config = configparser.ConfigParser()
+        ini_file_path = os.path.join(launcher_path, 'HCLaunch.ini')
+        config.read(ini_file_path)
+        appversion = config.get('APPVersion', 'version')
+        print("HCLauncher, Version:", appversion)
+        time.sleep(1)
+        # Parse the remote INI file
+        remote_config = configparser.ConfigParser()
+        remote_config.read_string(response.text)
+        
+        # Get the version from both INI files
+        local_ver = config['APPVersion']['version']
+        remote_ver = remote_config['APPVersion']['version']
+        print("Checking for updates.")
+        # Compare versions
+        if appversion == remote_ver:
+            print("Application up to date!")
+            time.sleep(1)
+            launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher", "py"))
+            sys.path.append(launcher_path)
+            import launcher
+            launcher.open_game()
+        else:
+            print("Application out of date! Updating!")
+            time.sleep(5)
+            update_launcher(repo_url="https://github.com/sharl16/HCLauncher")
+    else:
+        print("Failed to fetch HCLaunch.ini from server.")
+        time.sleep(10)
+
+check_for_updates()
