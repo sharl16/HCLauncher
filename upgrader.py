@@ -90,7 +90,7 @@ def check_for_updates():
         sys.path.append(launcher_path)
         # Parse the local INI file
         config = configparser.ConfigParser()
-        ini_file_path = os.path.join(launcher_path, 'HCLaunch.ini')
+        ini_file_path = os.path.join(launcher_path,'py', 'HCLaunch.ini')
         config.read(ini_file_path)
         appversion = config.get('APPVersion', 'version')
         print("HCLauncher, Version:", appversion)
