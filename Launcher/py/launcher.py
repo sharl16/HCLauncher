@@ -44,7 +44,7 @@ def verify_exe(pkgname):
         print("Executable up to date!")
         return pkgmodule
     except ImportError:
-        print(f"{Colors.RED}Ξεπερασμένο .exe! Κατέβασε την τελευταία εκδόση απο το Discord. {pkgname} was not found.{Colors.RESET}")
+        print(f"{Colors.RED}Ξεπερασμένο .exe! Κατέβασε την τελευταία εκδόση απο το Discord.{Colors.RESET}")
         time.sleep(1)     
         print("\n--- System Information ---")
         processor, architecture, machine, system_platform, pyver, user = get_hw_info()
@@ -60,7 +60,7 @@ def verify_exe(pkgname):
         time.sleep(120)
         raise SystemExit(f"Halting code execution..")
     
-verify_exe("requests")
+verify_exe("discord")
 
 version = "ForgeOptiFine 1.20.1" # can be updated and changed
 mcinstall.verifyMCVersion(version)
