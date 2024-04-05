@@ -12,7 +12,7 @@ def verifyMCVersion(version):
 
     with open(tlconfig, "w") as file:
         for line in lines:
-            print("Processing line:", repr(line))  # Print out the line being processed
+            #print("Processing line:", repr(line))  # Print out the line being processed
             if line.strip() == "" or line.strip().startswith("#"):
                 file.write(line)
                 continue

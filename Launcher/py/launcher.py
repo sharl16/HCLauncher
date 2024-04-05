@@ -12,6 +12,8 @@ import pyautogui
 import importlib
 import platform
 import getpass
+import winmgr
+from winmgr import close_splash
 
 class Colors:
     RESET = '\033[0m'
@@ -124,7 +126,7 @@ def open_game():
     game_dir = ".minecraft\\TLauncher.exe"
     game_path = os.path.join(appdata_directory, game_dir)
     if not os.path.exists(game_path):
-        print("Incorrect TLauncher version or TL is not installed (404). Download TLauncher 2.899")
+        print("Incorrect TLauncher version or TL is not installed (404). Download TLauncher 2.919")
         return
 
     process_name = "java.exe"
@@ -141,23 +143,19 @@ def open_game():
         print(f"{process_name} is not running. Launching...")
         process = subprocess.Popen([game_path])
         # Wait for the window to appear
-        hwnd = wait_for_tlauncher("TLauncher 2.919", timeout=30)
+        hwnd = wait_for_tlauncher("TLauncher 2.919", timeout=35)
         if hwnd:
             print("Injected to TL Window")
             # Set initial window position to a fixed location (e.g., top-left corner)
             #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
             # Continuously set window position every second
-            loop = 0
-            while True:
-                loop += 1
-                cursorX = 632
-                cursorY = 647
-                #pyautogui.click(cursorX, cursorY)
-                #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
-                time.sleep(0.1)
-                print(loop)
-                if loop == 2:
-                     break
+            cursorX = 632
+            cursorY = 647
+            #pyautogui.click(cursorX, cursorY)
+            #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
+            time.sleep(0.1)
+            print("terminating splash")
+            winmgr.close_windowr()
         else:
             print("Could not inject to TLauncher window within the timeout period.")
    

@@ -7,6 +7,13 @@ import time
 import configparser
 import importlib
 import subprocess
+import tkinter
+import multiprocessing
+import Launcher.py.winmgr as winmgr
+import threading
+
+global StepSTP
+StepSTP = 0
 
 class Colors:
     RESET = '\033[0m'
@@ -20,6 +27,11 @@ class Colors:
 
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
+    winmgr.close_window(image_path)
+    image_path = r'Launcher\py\Resources\HCDownloadUPD.png'
+    window_width = 600  # Adjust as needed
+    window_height = 282  # Adjust as needed
+    
     print("Downloading updates..")
     response = requests.get(repo_url + "/archive/main.zip") 
     if response.status_code == 200: # error handling
@@ -29,9 +41,17 @@ def download_repo(repo_url, output_dir):
             # Extract the entire contents of the ZIP file to the output directory
             zip_ref.extractall(output_dir)
             print("Extracting updates..")
-        os.remove("temp_repo.zip")
+            winmgr.close_window(image_path)
+            image_path = r'Launcher\py\Resources\HCExtractUPD.png'
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
+            os.remove("temp_repo.zip")
     else:
         print(f"Failed to download repository: {response.status_code} - {response.reason}")
+        winmgr.close_window(image_path)
+        image_path = r'Launcher\py\Resources\HCExtractUPD.png'
+        window_width = 600  # Adjust as needed
+        window_height = 282  # Adjust as needed
 
 # Function to execute download_repo() and to apply all the changes
 def update_launcher(repo_url):
@@ -48,14 +68,31 @@ def update_launcher(repo_url):
     download_repo(repo_url, grandparent_dir)
     downloaded_launcher_dir = os.path.join(grandparent_dir, "HCLauncher-main", "Launcher")
     print("Verifying update files..")
+    winmgr.close_window(image_path)
+    image_path = r'Launcher\py\Resources\HCVerifyUPD.png'
+    window_width = 600  # Adjust as needed
+    window_height = 282  # Adjust as needed
     print("Patching Launcher..")
+    winmgr.close_window(image_path)
+    image_path = r'Launcher\py\Resources\HCPatch.png'
+    window_width = 600  # Adjust as needed
+    window_height = 282  # Adjust as needed
     shutil.move(downloaded_launcher_dir, grandparent_dir) # moves Launcher to ServerSetup, or whatever the name of the workspace would be.
     #delete cache
     print("Clearing up..")
+    winmgr.close_window(image_path)
+    image_path = r'Launcher\py\Resources\HClearUp.png'
+    window_width = 600  # Adjust as needed
+    window_height = 282  # Adjust as needed
     extracted_repo_dir = os.path.join(grandparent_dir, "HCLauncher-main")
     shutil.rmtree(extracted_repo_dir) # deletes extracted zip from the workspace.
     time.sleep(1)
     print("Launcher up to date!")
+    winmgr.close_window(image_path)
+    image_path = r'Launcher\py\Resources\HCLaunchUpdated.png'
+    window_width = 600  # Adjust as needed
+    window_height = 282  # Adjust as needed
+    
     print(downloaded_launcher_dir)
     # imports the launcher.py script from the updated launcher directory
     launcher_script_path = os.path.join(grandparent_dir, "Launcher", "py")
@@ -64,14 +101,23 @@ def update_launcher(repo_url):
             import sys
             sys.path.append(os.path.join(grandparent_dir, "Launcher", "py")) # self explanatory
             print("Launching..")
+            image_path = r'Launcher\py\Resources\HCLaunching.png'
+            winmgr.close_window(image_path)         
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
             time.sleep(3)
             import launcher
             # Call the desired function from your_script
             launcher.open_game()
+            winmgr.close_window(image_path)
         except Exception as e: #error reports. {e} is the error message. this error results when launcher.py cannot be run. Maybe it can be resolved without a new .exe
             print(f"{Colors.CYAN}Report the following errors to developers: {Colors.RESET}")
             print(f"{Colors.RED}(Report this error to developers!) - Error on running launcher.py: {e}{Colors.RESET}")
             print(f"{Colors.YELLOW}Upgrader could not finish updating successfully. Download launcher again from Discord {Colors.RESET}")
+            winmgr.close_window(image_path)
+            image_path = r'Launcher\py\Resources\HCLaunchFailGr.png'
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
             print("Terminal exiting in (120)s.")
             time.sleep(120)
     else:
@@ -82,7 +128,7 @@ def update_launcher(repo_url):
 
 def check_for_updates():
     # Fetch the INI file from GitHub
-    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/HCLaunch.ini"
+    repo = "https://raw.githubusercontent.com/sharl16/HCLauncher/main/Launcher/py/HCLaunch.ini"
     response = requests.get(repo)
     # Check if the request was successful
     if response.status_code == 200:
@@ -103,20 +149,43 @@ def check_for_updates():
         local_ver = config['APPVersion']['version']
         remote_ver = remote_config['APPVersion']['version']
         print("Checking for updates.")
+        image_path = r'Launcher\py\Resources\HCCheckUPD.png'
+        winmgr.close_window(image_path)
+        time.sleep(0.5)
+        window_width = 600  # Adjust as needed
+        window_height = 282  # Adjust as needed
         # Compare versions
         if appversion == remote_ver:
             print("Application up to date!")
+            image_path = r'Launcher\py\Resources\HCLaunchUpdated.png'
+            winmgr.close_window(image_path)
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
             time.sleep(1)
             launcher_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Launcher", "py"))
             sys.path.append(launcher_path)
+            image_path = r'Launcher\py\Resources\HCLaunching.png'
+            winmgr.close_window(image_path)
             import launcher
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
             launcher.open_game()
         else:
             print("Application out of date! Updating!")
+            winmgr.close_window(image_path)
+            image_path = r'Launcher\py\Resources\HCUpdateInProgress.png'
+            window_width = 600  # Adjust as needed
+            window_height = 282  # Adjust as needed
             time.sleep(5)
             update_launcher(repo_url="https://github.com/sharl16/HCLauncher")
     else:
         print("Failed to fetch HCLaunch.ini from server.")
+        winmgr.close_window(image_path)
+        image_path = r'Launcher\py\Resources\HCLaunchGitFail.png'
+        window_width = 600  # Adjust as needed
+        window_height = 282  # Adjust as needed
         time.sleep(10)
 
+
+# Continue with checking for updates concurrently
 check_for_updates()
