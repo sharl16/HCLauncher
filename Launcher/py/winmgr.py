@@ -46,4 +46,12 @@ def close_window(image_path):
         print("Root is not defined")
 
 def close_windowr():
-    SystemError("Finished!")
+    for proc in psutil.process_iter():
+        try:
+            if proc.name() == "HCLauncher.exe":
+                proc.terminate()
+                print("Terminated process:", proc.pid)
+        except psutil.AccessDenied:
+            print("Access denied to terminate process:", proc.pid)
+        except psutil.NoSuchProcess:
+            print("Process", proc.pid, "no longer exists.")
