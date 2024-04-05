@@ -24,20 +24,11 @@ def show_splash(image_path, window_width, window_height):
 
     root.geometry('{}x{}+{}+{}'.format(window_width, window_height, x, y))
     label.pack()
-    check_close_splash()
     root.mainloop()
 
-def check_close_splash():
-    print(close_splash)
-    if close_splash:
-        close_windowr()
-    else:
-        # Check again after 100 milliseconds (adjust as needed)
-        root.after(100, check_close_splash)
-        print("splash")
 
 
-image_path = 'Launcher\py\Resources\HCGeneral.png'
+image_path = r'Launcher\py\Resources\HCGeneral.png'
 window_width = 600
 window_height = 282
 
@@ -55,12 +46,4 @@ def close_window(image_path):
         print("Root is not defined")
 
 def close_windowr():
-    for proc in psutil.process_iter():
-        try:
-            if proc.name() == "python.exe":
-                proc.terminate()
-                print("Terminated process:", proc.pid)
-        except psutil.AccessDenied:
-            print("Access denied to terminate process:", proc.pid)
-        except psutil.NoSuchProcess:
-            print("Process", proc.pid, "no longer exists.")
+    SystemError("Finished!")

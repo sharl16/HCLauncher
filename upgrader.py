@@ -27,8 +27,8 @@ class Colors:
 
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
-    winmgr.close_window(image_path)
     image_path = r'Launcher\py\Resources\HCDownloadUPD.png'
+    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     
@@ -40,12 +40,16 @@ def download_repo(repo_url, output_dir):
         with zipfile.ZipFile("temp_repo.zip", "r") as zip_ref:
             # Extract the entire contents of the ZIP file to the output directory
             zip_ref.extractall(output_dir)
+            image_path = r'Launcher\py\Resources\HCExtractUPD.png'
             print("Extracting updates..")
             winmgr.close_window(image_path)
-            image_path = r'Launcher\py\Resources\HCExtractUPD.png'
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
-            os.remove("temp_repo.zip")
+            time.sleep(1.5)
+        # Close the ZipFile object to release the resources
+        zip_ref.close()
+        # Now it should be safe to remove the temporary zip file
+        os.remove("temp_repo.zip")
     else:
         print(f"Failed to download repository: {response.status_code} - {response.reason}")
         winmgr.close_window(image_path)
@@ -68,28 +72,28 @@ def update_launcher(repo_url):
     download_repo(repo_url, grandparent_dir)
     downloaded_launcher_dir = os.path.join(grandparent_dir, "HCLauncher-main", "Launcher")
     print("Verifying update files..")
-    winmgr.close_window(image_path)
     image_path = r'Launcher\py\Resources\HCVerifyUPD.png'
+    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     print("Patching Launcher..")
-    winmgr.close_window(image_path)
     image_path = r'Launcher\py\Resources\HCPatch.png'
+    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     shutil.move(downloaded_launcher_dir, grandparent_dir) # moves Launcher to ServerSetup, or whatever the name of the workspace would be.
     #delete cache
     print("Clearing up..")
-    winmgr.close_window(image_path)
     image_path = r'Launcher\py\Resources\HClearUp.png'
+    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     extracted_repo_dir = os.path.join(grandparent_dir, "HCLauncher-main")
     shutil.rmtree(extracted_repo_dir) # deletes extracted zip from the workspace.
     time.sleep(1)
     print("Launcher up to date!")
-    winmgr.close_window(image_path)
     image_path = r'Launcher\py\Resources\HCLaunchUpdated.png'
+    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     
@@ -105,7 +109,6 @@ def update_launcher(repo_url):
             winmgr.close_window(image_path)         
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
-            time.sleep(3)
             import launcher
             # Call the desired function from your_script
             launcher.open_game()
@@ -114,8 +117,8 @@ def update_launcher(repo_url):
             print(f"{Colors.CYAN}Report the following errors to developers: {Colors.RESET}")
             print(f"{Colors.RED}(Report this error to developers!) - Error on running launcher.py: {e}{Colors.RESET}")
             print(f"{Colors.YELLOW}Upgrader could not finish updating successfully. Download launcher again from Discord {Colors.RESET}")
-            winmgr.close_window(image_path)
             image_path = r'Launcher\py\Resources\HCLaunchFailGr.png'
+            winmgr.close_window(image_path)
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
             print("Terminal exiting in (120)s.")
