@@ -27,8 +27,6 @@ class Colors:
 
 # Downloads latest build from GitHub
 def download_repo(repo_url, output_dir):
-    image_path = r'Launcher\py\Resources\HCDownloadUPD.png'
-    winmgr.close_window(image_path)
     window_width = 600  # Adjust as needed
     window_height = 282  # Adjust as needed
     
@@ -40,9 +38,7 @@ def download_repo(repo_url, output_dir):
         with zipfile.ZipFile("temp_repo.zip", "r") as zip_ref:
             # Extract the entire contents of the ZIP file to the output directory
             zip_ref.extractall(output_dir)
-            image_path = r'Launcher\py\Resources\HCExtractUPD.png'
             print("Extracting updates..")
-            winmgr.close_window(image_path)
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
             time.sleep(1.5)
@@ -52,8 +48,6 @@ def download_repo(repo_url, output_dir):
         os.remove("temp_repo.zip")
     else:
         print(f"Failed to download repository: {response.status_code} - {response.reason}")
-        winmgr.close_window(image_path)
-        image_path = r'Launcher\py\Resources\HCExtractUPD.png'
         window_width = 600  # Adjust as needed
         window_height = 282  # Adjust as needed
 
@@ -64,24 +58,18 @@ def update_launcher(repo_url):
     grandparent_dir = os.path.dirname(parent_dir) # which is the ServerSetup folder in the workspace.
     # Delete the existing Launcher folder if it exists
     print("Clearing up outdated files..")
-    existing_launcher_dir = os.path.join(grandparent_dir, "Launcher")
+    existing_launcher_dir = os.path.join(script_dir, "Launcher")
     if os.path.exists(existing_launcher_dir):
         shutil.rmtree(existing_launcher_dir) 
 
     # download repo
+    image_path2 = r'BackupResource\HCUpdateRSC.png'
+    winmgr.close_window(image_path2)
     download_repo(repo_url, grandparent_dir)
     downloaded_launcher_dir = os.path.join(grandparent_dir, "HCLauncher-main", "Launcher")
     print("Verifying update files..")
-    image_path = r'Launcher\py\Resources\HCVerifyUPD.png'
-    winmgr.close_window(image_path)
-    window_width = 600  # Adjust as needed
-    window_height = 282  # Adjust as needed
-    print("Patching Launcher..")
-    image_path = r'Launcher\py\Resources\HCPatch.png'
-    winmgr.close_window(image_path)
-    window_width = 600  # Adjust as needed
-    window_height = 282  # Adjust as needed
-    shutil.move(downloaded_launcher_dir, grandparent_dir) # moves Launcher to ServerSetup, or whatever the name of the workspace would be.
+    time.sleep(1)
+    shutil.move(downloaded_launcher_dir, script_dir) # moves Launcher to ServerSetup, or whatever the name of the workspace would be.
     #delete cache
     print("Clearing up..")
     image_path = r'Launcher\py\Resources\HClearUp.png'
@@ -99,16 +87,18 @@ def update_launcher(repo_url):
     
     print(downloaded_launcher_dir)
     # imports the launcher.py script from the updated launcher directory
-    launcher_script_path = os.path.join(grandparent_dir, "Launcher", "py")
+    launcher_script_path = os.path.join(script_dir, "Launcher", "py")
+    
     if os.path.exists(launcher_script_path):
         try:
             import sys
-            sys.path.append(os.path.join(grandparent_dir, "Launcher", "py")) # self explanatory
+            sys.path.append(os.path.join(script_dir, "Launcher", "py")) # self explanatory
             print("Launching..")
             image_path = r'Launcher\py\Resources\HCLaunching.png'
             winmgr.close_window(image_path)         
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
+            time.sleep(2)
             import launcher
             # Call the desired function from your_script
             launcher.open_game()
@@ -175,8 +165,8 @@ def check_for_updates():
             launcher.open_game()
         else:
             print("Application out of date! Updating!")
-            winmgr.close_window(image_path)
             image_path = r'Launcher\py\Resources\HCUpdateInProgress.png'
+            winmgr.close_window(image_path)
             window_width = 600  # Adjust as needed
             window_height = 282  # Adjust as needed
             time.sleep(5)
