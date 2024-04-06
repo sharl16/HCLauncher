@@ -183,8 +183,8 @@ def check_for_updates():
             update_launcher(repo_url="https://github.com/sharl16/HCLauncher")
     else:
         print("Failed to fetch HCLaunch.ini from server.")
-        winmgr.close_window(image_path)
         image_path = r'Launcher\py\Resources\HCLaunchGitFail.png'
+        winmgr.close_window(image_path)
         window_width = 600  # Adjust as needed
         window_height = 282  # Adjust as needed
         time.sleep(10)
