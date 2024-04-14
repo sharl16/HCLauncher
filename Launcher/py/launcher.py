@@ -158,6 +158,7 @@ def open_game():
             winmgr.close_windowr()
         else:
             print("Could not inject to TLauncher window within the timeout period.")
+            winmgr.close_windowr()
    
 
 
