@@ -143,7 +143,7 @@ def open_game():
         print(f"{process_name} is not running. Launching...")
         process = subprocess.Popen([game_path])
         # Wait for the window to appear
-        hwnd = wait_for_tlauncher("TLauncher 2.919", timeout=35)
+        hwnd = wait_for_tlauncher("TLauncher 2.921", timeout=35)
         if hwnd:
             print("Injected to TL Window")
             # Set initial window position to a fixed location (e.g., top-left corner)
