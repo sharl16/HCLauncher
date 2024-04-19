@@ -144,7 +144,22 @@ def open_game():
         process = subprocess.Popen([game_path])
         # Wait for the window to appear
         print("Opened")
-        winmgr.close_windowr()
+        hwnd = wait_for_tlauncher("TLauncher 2.921", timeout=35)
+        if hwnd:
+            print("Injected to TL Window")
+            # Set initial window position to a fixed location (e.g., top-left corner)
+            #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
+            # Continuously set window position every second
+            #cursorX = 632
+            #cursorY = 647
+            #pyautogui.click(cursorX, cursorY)
+            #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
+            time.sleep(0.1)
+            print("terminating splash")
+            winmgr.close_windowr()
+        else:
+            print("Could not inject to TLauncher window within the timeout period.")
+            winmgr.close_windowr()
    
 
 
