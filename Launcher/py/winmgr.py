@@ -2,9 +2,10 @@ import tkinter as tk
 import threading
 import psutil
 import time
-import os
+import sys
 
 close_splash = False
+root = None
 
 def show_splash(image_path, window_width, window_height):
     global root
@@ -12,7 +13,7 @@ def show_splash(image_path, window_width, window_height):
     root.image = tk.PhotoImage(file=image_path)
     global label
     label = tk.Label(root, image=root.image, bg='white')
-    label.image = root.image  # Keep a reference to the image
+    label.image = root.image
     root.overrideredirect(True)
     root.lift()
     root.wm_attributes("-topmost", True)
@@ -28,7 +29,23 @@ def show_splash(image_path, window_width, window_height):
     label.pack()
     root.mainloop()
 
+def close_window(image_path):
+    global root
+    global label
+    if root:
+        new_image = tk.PhotoImage(file=image_path)
+        label.config(image=new_image)
+        label.image = new_image
+    else:
+        print("Root is not defined")
 
+def close_windowr():
+    print("Exiting")
+    if root:
+        root.quit()
+    else:
+        print("Root is not defined")
+    sys.exit()
 
 image_path = r'Launcher\py\Resources\HCGeneral.png'
 window_width = 600
@@ -36,17 +53,3 @@ window_height = 282
 
 splash_thread = threading.Thread(target=show_splash, args=(image_path, window_width, window_height))
 splash_thread.start()
-
-def close_window(image_path):
-    global root
-    global label
-    if root:
-        new_image = tk.PhotoImage(file=image_path)
-        label.config(image=new_image)  # Update the label's image
-        label.image = new_image  # Store reference to avoid garbage collection
-    else:
-        print("Root is not defined")
-
-def close_windowr():
-    print("exiting")
-    os._exit(-1)
