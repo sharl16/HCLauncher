@@ -14,14 +14,14 @@ import keyboard
 
 print("Upgrader Version: 2.0")
 
+import Launcher.py.winmgr as winmgr # type: ignore
+
 root_dir = os.path.join(os.getenv('APPDATA'), 'HCLauncher')
 if os.path.exists(root_dir):
     print("Integrity OK!")
     print("Installed at: "+root_dir)
 else:
     print("Application cannot be started. Unfinished installation.")
-
-import Launcher.py.winmgr as winmgr # type: ignore
 
 time.sleep(1)
 
