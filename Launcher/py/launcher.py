@@ -130,7 +130,7 @@ def open_game():
         return
 
     process_name = "java.exe"
-    if process_status(process_name):
+    if process_status(process_name) and terminated == False:
         print(f"{process_name} is already running. Terminating the process.")
         for proc in psutil.process_iter():
             if proc.name() == process_name:
