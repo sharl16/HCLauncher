@@ -137,15 +137,15 @@ def open_game():
                 proc.terminate()
                 print(f"{process_name} terminated.")
                 terminated = True
-                time.sleep
+                time.sleep(1)
                 open_game()
     else:
         print(f"{process_name} is not running. Launching...")
         process = subprocess.Popen([game_path])
-        winmgr.close_windowr()
         print("Opened")
-        #hwnd = wait_for_tlauncher("TLauncher 2.921", timeout=35)
-        #if hwnd:
+        hwnd = wait_for_tlauncher("TLauncher 2.921", timeout=35)
+        if hwnd:
+            winmgr.close_windowr()
             #print("Injected to TL Window")
             # Set initial window position to a fixed location (e.g., top-left corner)
             #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
@@ -157,7 +157,8 @@ def open_game():
             #time.sleep(0.1)
             #print("terminating splash")
             
-        #else:
+        else:
+            winmgr.close_windowr()
             #print("Could not inject to TLauncher window within the timeout period.")
             #winmgr.close_windowr()
    
