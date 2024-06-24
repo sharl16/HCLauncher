@@ -16,7 +16,7 @@ verified = False
 appdata_directory = os.getenv('APPDATA')
 
 def download_file(url, output_directory):
-    image_path = r'_internal\Launcher\py\Resources\HCInstalling.png'
+    image_path = r'_internal\Launcher\py\Resources\HCSplash.png'
     winmgr.close_window(image_path)
     filename = url.split("/")[-1]
     output_path = os.path.join(output_directory, filename)
