@@ -47,7 +47,7 @@ def close_windowr():
         print("Root is not defined")
     sys.exit()
 
-image_path = r'Launcher\py\Resources\HCGeneral.png'
+image_path = r'_internal\Launcher\py\Resources\HCGeneral.png'
 window_width = 600
 window_height = 282
 

@@ -16,7 +16,7 @@ verified = False
 appdata_directory = os.getenv('APPDATA')
 
 def download_file(url, output_directory):
-    image_path = r'Launcher\py\Resources\HCSplash.png'
+    image_path = r'_internal\Launcher\py\Resources\HCInstalling.png'
     winmgr.close_window(image_path)
     filename = url.split("/")[-1]
     output_path = os.path.join(output_directory, filename)
@@ -41,7 +41,7 @@ def verify_versions(filename, output_directory):
     else:
         verified = False
         print("Minecraft directory does not exist.")
-        image_path = r'Launcher\py\Resources\HCError.png'
+        image_path = r'_internal\Launcher\py\Resources\HCError.png'
         winmgr.close_window(image_path)
         time.sleep(5)
         winmgr.close_windowr()
@@ -55,7 +55,7 @@ def process_status(process_name):
 
 
 def open_game():
-    image_path = r'Launcher\py\Resources\HCLaunching.png'
+    image_path = r'_internal\Launcher\py\Resources\HCLaunching.png'
     winmgr.close_window(image_path)
     terminated = False
     appdata_directory = os.getenv('APPDATA')
