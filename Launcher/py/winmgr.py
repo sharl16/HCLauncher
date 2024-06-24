@@ -1,3 +1,8 @@
+import platform
+
+if platform.system() != "Windows":
+    sys.exit("Cannot run outside Windows")
+
 import tkinter as tk
 import threading
 import psutil
@@ -19,25 +24,13 @@ def show_splash(image_path, window_width, window_height):
     root.wm_attributes("-topmost", True)
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "white")
-
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     x = (screen_width // 2) - (window_width // 2)
     y = (screen_height // 2) - (window_height // 2)
-
     root.geometry('{}x{}+{}+{}'.format(window_width, window_height, x, y))
     label.pack()
     root.mainloop()
-
-def close_window(image_path):
-    global root
-    global label
-    if root:
-        new_image = tk.PhotoImage(file=image_path)
-        label.config(image=new_image)
-        label.image = new_image
-    else:
-        print("Root is not defined")
 
 def close_windowr():
     print("Exiting")

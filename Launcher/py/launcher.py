@@ -3,66 +3,14 @@ import requests
 import subprocess
 import psutil
 import time
-import win32gui
-import win32con
 import sys
 sys.path.append('Launcher/py')
 import mcinstall
-import pyautogui
 import importlib
 import platform
 import getpass
 import winmgr
-from winmgr import close_splash
-
-class Colors:
-    RESET = '\033[0m'
-    RED = '\033[91m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    BLUE = '\033[94m'
-    PURPLE = '\033[95m'
-    CYAN = '\033[96m'
-    WHITE = '\033[97m'
-
-def get_hw_info():
-    processor = platform.processor()
-    architecture = platform.architecture()[0]
-    machine = platform.machine()
-    system_platform = platform.platform()
-    pyver = platform.python_version()
-    user = getpass.getuser()
-    return processor, architecture, machine, system_platform, pyver, user
-
-def get_os_info():
-    os_name = platform.system()
-    os_release = platform.release()
-    os_version = platform.version()
-    return os_name, os_release, os_version
-
-def verify_exe(pkgname):
-    try:
-        pkgmodule = importlib.import_module(pkgname)
-        print("Executable up to date!")
-        return pkgmodule
-    except ImportError:
-        print(f"{Colors.RED}Ξεπερασμένο .exe! Κατέβασε την τελευταία εκδόση απο το Discord.{Colors.RESET}")
-        time.sleep(1)     
-        print("\n--- System Information ---")
-        processor, architecture, machine, system_platform, pyver, user = get_hw_info()
-        print("Python:", pyver)
-        print("CPU:", processor)
-        print("Architecture:", architecture)
-        print("=======================")
-        print("User:", user)
-        print("Vendor:", machine)
-        print("OS:", system_platform)
-        time.sleep(2)
-        print(f"{Colors.BLUE}Closing in 120s..{Colors.RESET}")
-        time.sleep(120)
-        raise SystemExit(f"Halting code execution..")
-    
-verify_exe("discord")
+import win32gui
 
 version = "ForgeOptiFine 1.20.1" # can be updated and changed
 mcinstall.verifyMCVersion(version)
@@ -84,18 +32,14 @@ def download_file(url, output_directory):
 
 
 def verify_versions(filename, output_directory):
-    global verified  # Declare 'verified' as a global variable
+    global verified
     mcdir = ".minecraft\\versions\\ForgeOptiFine 1.20.1"
     mcversion = os.path.join(os.getenv('APPDATA'), mcdir)
-
-    # Check if the Minecraft version directory exists
     if os.path.exists(mcversion):
-        # If it exists, continue to check if the specified file exists
         filepath = os.path.join(output_directory, filename)
         if os.path.exists(filepath):
             verified = True
     else:
-        # If the Minecraft version directory does not exist, return False
         verified = False
         print("Minecraft directory does not exist.")
         return False
@@ -109,9 +53,6 @@ def wait_for_tlauncher(window_title, timeout=30):
         elif time.time() - start_time > timeout:
             return None
         time.sleep(1)
-
-def set_window_position(hwnd, x, y):
-    win32gui.SetWindowPos(hwnd, None, x, y, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
 
 def process_status(process_name):
     for proc in psutil.process_iter():
@@ -128,7 +69,6 @@ def open_game():
     if not os.path.exists(game_path):
         print("Incorrect TLauncher version or TL is not installed (404). Download TLauncher 2.921")
         return
-
     process_name = "java.exe"
     if process_status(process_name) and terminated == False:
         print(f"{process_name} is already running. Terminating the process.")
@@ -142,28 +82,7 @@ def open_game():
     else:
         print(f"{process_name} is not running. Launching...")
         process = subprocess.Popen([game_path])
-        print("Opened")
-        hwnd = wait_for_tlauncher("TLauncher 2.921", timeout=35)
-        if hwnd:
-            winmgr.close_windowr()
-            #print("Injected to TL Window")
-            # Set initial window position to a fixed location (e.g., top-left corner)
-            #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
-            # Continuously set window position every second
-            #cursorX = 632
-            #cursorY = 647
-            #pyautogui.click(cursorX, cursorY)
-            #win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
-            #time.sleep(0.1)
-            #print("terminating splash")
-            
-        else:
-            winmgr.close_windowr()
-            #print("Could not inject to TLauncher window within the timeout period.")
-            #winmgr.close_windowr()
-   
-
-
+        winmgr.close_windowr()
 
 # List of modpack URLs
 modpack_urls = [
@@ -181,25 +100,18 @@ modpack_urls = [
     # Add more URLs here if needed
 ]
 
-# Specify the relative path to the Minecraft mods directory
 relative_output_directory = ".minecraft\\mods"
-
-# Get the user's AppData directory
 appdata_directory = os.getenv('APPDATA')
-
-# Create the full output directory path
 output_directory = os.path.join(appdata_directory, relative_output_directory)
 
-# Ensure the output directory exists, create if it doesn't
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
     print("Created directory:", output_directory)
 
-# Download or check each modpack in the list
 for modpack_url in modpack_urls:
     filename = modpack_url.split("/")[-1]
     if not verify_versions(filename, output_directory):
-        if not verified:  # No need to check `verified == False`, can directly use `not verified`
+        if not verified: 
             downloaded_file_path = download_file(modpack_url, output_directory)
             print("File downloaded to:", downloaded_file_path)
     else:
