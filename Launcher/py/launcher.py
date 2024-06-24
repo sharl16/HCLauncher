@@ -4,13 +4,10 @@ import subprocess
 import psutil
 import time
 import sys
-sys.path.append('Launcher/py')
 import mcinstall
-import importlib
-import platform
-import getpass
 import winmgr
-import win32gui
+
+sys.path.append('Launcher/py')
 
 version = "ForgeOptiFine 1.20.1" # can be updated and changed
 mcinstall.verifyMCVersion(version)
@@ -19,9 +16,10 @@ verified = False
 appdata_directory = os.getenv('APPDATA')
 
 def download_file(url, output_directory):
+    image_path = r'Launcher\py\Resources\HCSplash.png'
+    winmgr.close_window(image_path)
     filename = url.split("/")[-1]
     output_path = os.path.join(output_directory, filename)
-
     with requests.get(url, stream=True) as req:
         req.raise_for_status()
         with open(output_path, 'wb') as f:
@@ -32,6 +30,7 @@ def download_file(url, output_directory):
 
 
 def verify_versions(filename, output_directory):
+
     global verified
     mcdir = ".minecraft\\versions\\ForgeOptiFine 1.20.1"
     mcversion = os.path.join(os.getenv('APPDATA'), mcdir)
@@ -42,17 +41,11 @@ def verify_versions(filename, output_directory):
     else:
         verified = False
         print("Minecraft directory does not exist.")
+        image_path = r'Launcher\py\Resources\HCError.png'
+        winmgr.close_window(image_path)
+        time.sleep(5)
+        winmgr.close_windowr()
         return False
-
-def wait_for_tlauncher(window_title, timeout=30):
-    start_time = time.time()
-    while True:
-        hwnd = win32gui.FindWindow(None, window_title)
-        if hwnd != 0:
-            return hwnd
-        elif time.time() - start_time > timeout:
-            return None
-        time.sleep(1)
 
 def process_status(process_name):
     for proc in psutil.process_iter():
@@ -62,6 +55,8 @@ def process_status(process_name):
 
 
 def open_game():
+    image_path = r'Launcher\py\Resources\HCLaunching.png'
+    winmgr.close_window(image_path)
     terminated = False
     appdata_directory = os.getenv('APPDATA')
     game_dir = ".minecraft\\TLauncher.exe"

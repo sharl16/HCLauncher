@@ -1,2 +1,2 @@
-import Launcher.py.launcher.py as launcher
+import Launcher.py.launcher as launcher
 launcher.open_game()
