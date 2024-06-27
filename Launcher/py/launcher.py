@@ -41,10 +41,6 @@ def verify_versions(filename, output_directory):
     else:
         verified = False
         print("Minecraft directory does not exist.")
-        image_path = r'_internal\Launcher\py\Resources\HCError.png'
-        winmgr.close_window(image_path)
-        time.sleep(5)
-        winmgr.close_windowr()
         return False
 
 def process_status(process_name):
