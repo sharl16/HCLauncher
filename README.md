@@ -1,3 +1,3 @@
 # HCLauncher
 
-kati malakies ekei 
+A bootstrapper/launcher for TLauncher
