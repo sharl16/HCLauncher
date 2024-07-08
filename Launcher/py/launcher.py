@@ -4,8 +4,8 @@ import subprocess
 import psutil
 import time
 import sys
-import mcinstall
-import winmgr
+import Launcher.py.mcinstall as mcinstall
+import Launcher.py.winmgr as winmgr
 
 sys.path.append('Launcher/py')
 
